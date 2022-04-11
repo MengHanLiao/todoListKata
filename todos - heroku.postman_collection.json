@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "4a8630ce-dd78-459e-9a06-a08ebf1aa5cd",
+		"name": "todos - heroku",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "取得所有請求",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://rocky-wave-25358.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"rocky-wave-25358",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增代辦事項",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"sad3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rocky-wave-25358.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"rocky-wave-25358",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除所有代辦",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://rocky-wave-25358.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"rocky-wave-25358",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "刪除單筆代辦",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://rocky-wave-25358.herokuapp.com/todo/id",
+					"protocol": "https",
+					"host": [
+						"rocky-wave-25358",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯代辦事項",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"happy\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://rocky-wave-25358.herokuapp.com/todo/id",
+					"protocol": "https",
+					"host": [
+						"rocky-wave-25358",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo",
+						"id"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
