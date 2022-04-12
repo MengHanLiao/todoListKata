@@ -1,5 +1,6 @@
 const http = require('http');
 const { v4:uuidv4 } = require('uuid');
+const successHandler = require('./successHandler');
 const errorHandler = require('./errorHandler');
 const todo = [];
 
@@ -8,36 +9,19 @@ const requestListener = (req, res) => {
   req.on('data', chunk => {
     body += chunk;
   });
-
-  const headers = {
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'PATCH, POST, GET,OPTIONS,DELETE',
-    'Content-Type': 'application/json'
-  }
   if (req.url === '/todo' && req.method === 'GET') {
-    res.writeHead(200, headers);
-    res.write(JSON.stringify({
-      "status": "success",
-      "data": todo,
-    }));
-    res.end();
+    successHandler(res, todo);
   } else if (req.url === '/todo' && req.method === 'POST') {
     req.on('end', () => {
       try{
         const title = JSON.parse(body).title;
-        if (title !== undefined) {
+        if (title) {
           const todoObj = {
             title,
             "id": uuidv4(),
           };
           todo.push(todoObj);
-          res.writeHead(200, headers);
-          res.write(JSON.stringify({
-            "status": "success",
-            "data": todo,
-          }));
-          res.end();
+          successHandler(res, todo);
         } else {
           errorHandler(res);
         }
@@ -47,23 +31,13 @@ const requestListener = (req, res) => {
     });
   } else if (req.url === '/todo' && req.method === 'DELETE') {
     todo.length = 0;
-    res.writeHead(200, headers);
-    res.write(JSON.stringify({
-      "status": "success",
-      "message": "刪除全部",
-    }));
-    res.end();
+    successHandler(res, todo);
   } else if (req.url.startsWith('/todo/') && req.method === 'DELETE') {
     const id = req.url.split('/').pop();
     const index = todo.findIndex(item => item.id === id);
     if (index !== -1) {
       todo.splice(index, 1);
-      res.writeHead(200, headers);
-      res.write(JSON.stringify({
-        status: 'success',
-        data: todo,
-      }));
-      res.end();
+      successHandler(res, todo);
     } else {
       errorHandler(res);
     }
@@ -73,14 +47,9 @@ const requestListener = (req, res) => {
         const title = JSON.parse(body).title;
         const id = req.url.split('/').pop();
         const index = todo.findIndex(item => item.id ===id);
-        if (title !== undefined && index !== -1) {
+        if (title && index !== -1) {
           todo[index].title = title;
-          res.writeHead(200, headers);
-          res.write(JSON.stringify({
-            status: "success",
-            data: todo,
-          }));
-          res.end();
+          successHandler(res, todo);
         } else {
           errorHandler(res);
         }
@@ -92,12 +61,7 @@ const requestListener = (req, res) => {
     res.writeHead(200, headers);
     res.end();
   } else {
-    res.writeHead(404, headers);
-    res.write(JSON.stringify({
-      "status": "error",
-      "message": "Nothing here",
-    }));
-    res.end();
+    errorHandler(res, 404);
   }
 };
 
